@@ -139,7 +139,7 @@ window.onload = ->
 
 	myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,
-		mode: "javascript",
+		mode: "coffeescript",
 		keyMap: "sublime",
 		theme: "dracula",
 		autoCloseBrackets: true,
@@ -184,7 +184,7 @@ initial_code = """
 balls = []
 
 class Ball
-	constructor : (@x,@y,@size,@vx,@vy,@r,@g,@b) ->
+	constructor : (@x,@y,@size, @vx,@vy, @r,@g,@b) ->
 
 	draw : ->
 		fc @r,@g,@b
@@ -196,8 +196,8 @@ class Ball
 		@vy += 0.1
 
 window.setup = ->
-	balls.push new Ball 100,100,50,2,1, 1,0,0
-	balls.push new Ball 50,100,40,1,3, 1,1,0
+	balls.push new Ball x=100,y=100,size=50, vx=2,vy=1, r=1,g=0,b=0
+	balls.push new Ball x= 50,y=100,size=40, vx=1,vy=3, r=1,g=1,b=0
 
 window.draw = ->
 	bg 0.5
