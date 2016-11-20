@@ -53,14 +53,6 @@ grid = function() {
   return pop();
 };
 
-print = function(s) {
-  return console.log(s);
-};
-
-co = function() {
-  return fixColor(arguments);
-};
-
 fixColor = function(args) {
   var a, b, g, n, r;
   n = args.length;
@@ -89,6 +81,26 @@ bg = function() {
   return background(fixColor(arguments));
 };
 
+sw = function(n) {
+  return strokeWeight(n);
+};
+
+circle = function(x, y, r) {
+  return ellipse(x, y, 2 * r, 2 * r);
+};
+
+rd = function(vinkel) {
+  return rotate(radians(vinkel));
+};
+
+print = function(s) {
+  return console.log(s);
+};
+
+co = function() {
+  return fixColor(arguments);
+};
+
 fc = function() {
   var n;
   n = arguments.length;
@@ -107,18 +119,6 @@ sc = function(r, g, b) {
   } else {
     return stroke(fixColor(arguments));
   }
-};
-
-sw = function(n) {
-  return strokeWeight(n);
-};
-
-circle = function(x, y, r) {
-  return ellipse(x, y, 2 * r, 2 * r);
-};
-
-rd = function(vinkel) {
-  return rotate(radians(vinkel));
 };
 
 range = function() {
@@ -155,7 +155,6 @@ run1 = function(code) {
   reset();
   try {
     setMsg('');
-    console.log(code);
     eval(code);
     return pop();
   } catch (error) {
@@ -206,10 +205,10 @@ changeLayout = function() {
     position: 'absolute'
   });
   $("#canvas").css({
+    left: 0,
     top: 0,
     position: 'absolute'
   });
-  $("#canvas").left(0);
   return $("#msg").width(w - 600);
 };
 
@@ -229,4 +228,4 @@ setMsg = function(txt) {
   }
 };
 
-initial_code = "balls = []\n\nclass Ball\n	constructor : (@x,@y,@size, @vx,@vy, @r,@g,@b) ->\n\n	draw : ->\n		fc @r,@g,@b\n		circle @x,@y,@size\n		@x += @vx\n		@y += @vy\n		@vx = -@vx unless @size < @x < width-@size\n		@vy = if @y < height-@size then @vy+0.1 else -@vy\n\n@setup = ->\n	balls.push new Ball x=100,y=50,size=50, vx=2,vy=0, r=1,g=0,b=0\n	balls.push new Ball x= 50,y=40,size=40, vx=1,vy=0, r=1,g=1,b=0\n\n@draw = ->\n	bg 0.5\n	for ball in balls\n		ball.draw()";
+initial_code = "@balls = []\n\nclass Ball\n	constructor : (@x,@y,@size, @vx,@vy, @r=random(1),@g=random(1),@b=random(1)) -> print @\n\n	draw : ->\n		fc @r,@g,@b\n		circle @x,@y,@size\n		@x += @vx\n		@y += @vy\n		@vx = -@vx unless @size < @x < width-@size\n		@vy = if @y < height-@size then @vy+0.1 else -@vy\n\n@draw = ->\n	bg 0.5\n	for ball in @balls\n		ball.draw()\n		\n@mousePressed = ->\n	if mouseX < width and mouseY < height\n		@balls.push new Ball mouseX,mouseY,random(10,50), vx=random(1,2),vy=0";

@@ -37,11 +37,6 @@ grid = ->
 		line 20 * i, 0, 20 * i, 200
 	pop()
 
-print = (s) ->
-	console.log s
-
-co = ->
-  return fixColor arguments
 
 fixColor = (args) ->
 	n = args.length
@@ -65,6 +60,11 @@ fixColor = (args) ->
 	return color 255 * r, 255 * g, 255 * b, 255 * a
 
 bg = ->	background fixColor arguments
+sw = (n) -> strokeWeight n 
+circle = (x,y,r) -> ellipse x,y,2*r,2*r
+rd = (vinkel) -> return rotate radians vinkel
+print = (s) -> console.log s
+co = -> return fixColor arguments
 
 fc = ->
 	n = arguments.length
@@ -79,12 +79,6 @@ sc = (r, g, b) ->
 		noStroke()
 	else
 		stroke fixColor arguments
-
-sw = (n) -> strokeWeight n 
-
-circle = (x,y,r) -> ellipse x,y,2*r,2*r
-
-rd = (vinkel) -> return rotate radians vinkel
 
 range = () ->
 	n = arguments.length
@@ -118,7 +112,6 @@ run1 = (code) ->
 
 	try 
 		setMsg ''
-		console.log code
 		eval code
 		pop()
 	catch err
@@ -134,8 +127,6 @@ run = ->
 		background 255
 
 window.onload = ->
-
-	#ta = document.getElementById("code")
 
 	myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,
@@ -162,8 +153,7 @@ changeLayout = () ->
 	w = $(window).width()
 	$(".CodeMirror").width(w-600)
 	$(".CodeMirror").css({top: 0, left: 600, height: 600, position:'absolute'});   
-	$("#canvas").css({top: 0, position:'absolute'});    
-	$("#canvas").left(0) 
+	$("#canvas").css({left:0, top: 0, position:'absolute'});    
 	$("#msg").width(w-600)
 
 resizeTimer = 0
@@ -181,10 +171,10 @@ setMsg = (txt) ->
 		msg.css('background-color', '#FF0000')
 
 initial_code = """
-balls = []
+@balls = []
 
 class Ball
-	constructor : (@x,@y,@size, @vx,@vy, @r,@g,@b) ->
+	constructor : (@x,@y,@size, @vx,@vy, @r=random(1),@g=random(1),@b=random(1)) -> print @
 
 	draw : ->
 		fc @r,@g,@b
@@ -194,12 +184,12 @@ class Ball
 		@vx = -@vx unless @size < @x < width-@size
 		@vy = if @y < height-@size then @vy+0.1 else -@vy
 
-@setup = ->
-	balls.push new Ball x=100,y=50,size=50, vx=2,vy=0, r=1,g=0,b=0
-	balls.push new Ball x= 50,y=40,size=40, vx=1,vy=0, r=1,g=1,b=0
-
 @draw = ->
 	bg 0.5
-	for ball in balls
+	for ball in @balls
 		ball.draw()
+		
+@mousePressed = ->
+	if mouseX < width and mouseY < height
+		@balls.push new Ball mouseX,mouseY,random(10,50), vx=random(1,2),vy=0
 """
