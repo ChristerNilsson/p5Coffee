@@ -192,12 +192,11 @@ class Ball
 		@x += @vx
 		@y += @vy
 		@vx = -@vx unless @size < @x < width-@size
-		@vy = -@vy unless @size < @y < height-@size
-		@vy += 0.1
+		@vy = if @y < height-@size then @vy+0.1 else -@vy
 
 @setup = ->
-	balls.push new Ball x=100,y=100,size=50, vx=2,vy=1, r=1,g=0,b=0
-	balls.push new Ball x= 50,y=100,size=40, vx=1,vy=3, r=1,g=1,b=0
+	balls.push new Ball x=100,y=50,size=50, vx=2,vy=0, r=1,g=0,b=0
+	balls.push new Ball x= 50,y=40,size=40, vx=1,vy=0, r=1,g=1,b=0
 
 @draw = ->
 	bg 0.5

@@ -229,4 +229,4 @@ setMsg = function(txt) {
   }
 };
 
-initial_code = "balls = []\n\nclass Ball\n	constructor : (@x,@y,@size, @vx,@vy, @r,@g,@b) ->\n\n	draw : ->\n		fc @r,@g,@b\n		circle @x,@y,@size\n		@x += @vx\n		@y += @vy\n		@vx = -@vx unless @size < @x < width-@size\n		@vy = -@vy unless @size < @y < height-@size\n		@vy += 0.1\n\n@setup = ->\n	balls.push new Ball x=100,y=100,size=50, vx=2,vy=1, r=1,g=0,b=0\n	balls.push new Ball x= 50,y=100,size=40, vx=1,vy=3, r=1,g=1,b=0\n\n@draw = ->\n	bg 0.5\n	for ball in balls\n		ball.draw()";
+initial_code = "balls = []\n\nclass Ball\n	constructor : (@x,@y,@size, @vx,@vy, @r,@g,@b) ->\n\n	draw : ->\n		fc @r,@g,@b\n		circle @x,@y,@size\n		@x += @vx\n		@y += @vy\n		@vx = -@vx unless @size < @x < width-@size\n		@vy = if @y < height-@size then @vy+0.1 else -@vy\n\n@setup = ->\n	balls.push new Ball x=100,y=50,size=50, vx=2,vy=0, r=1,g=0,b=0\n	balls.push new Ball x= 50,y=40,size=40, vx=1,vy=0, r=1,g=1,b=0\n\n@draw = ->\n	bg 0.5\n	for ball in balls\n		ball.draw()";
