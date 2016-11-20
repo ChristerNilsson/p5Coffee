@@ -195,11 +195,11 @@ class Ball
 		@vy = -@vy unless @size < @y < height-@size
 		@vy += 0.1
 
-window.setup = ->
+@setup = ->
 	balls.push new Ball x=100,y=100,size=50, vx=2,vy=1, r=1,g=0,b=0
 	balls.push new Ball x= 50,y=100,size=40, vx=1,vy=3, r=1,g=1,b=0
 
-window.draw = ->
+@draw = ->
 	bg 0.5
 	for ball in balls
 		ball.draw()
