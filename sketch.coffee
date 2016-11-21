@@ -1,25 +1,28 @@
-running = 0
-button = 0
-myCodeMirror = 0
-msg = 0
-student_draw = 0
-student_setup = 0
+
+student = {}
+student.running = 0
+student.button = 0
+student.myCodeMirror = 0
+student.msg = 0
+
+student.setup = ->
+student.draw = ->
 
 setup = ->
 	c = createCanvas 600, 600
 	pixelDensity 1
 	c.parent 'canvas'
 
-	msg = $('#msg')
+	student.msg = $('#msg')
 
-	button = createButton "run"
-	button.position 560,600
-	button.size 40,20
-	button.mousePressed run
+	student.button = createButton "run"
+	student.button.position 560,600
+	student.button.size 40,20
+	student.button.mousePressed run
 
 draw = ->
-	if running == 1
-		student_draw()
+	if student.running == 1
+		student.draw()
 	else
 		bg 1
 
@@ -36,7 +39,6 @@ grid = ->
 		line 0, 20 * i, 200, 20 * i
 		line 20 * i, 0, 20 * i, 200
 	pop()
-
 
 fixColor = (args) ->
 	n = args.length
@@ -90,19 +92,20 @@ range = () ->
 		return _.range arguments[0],arguments[1],arguments[2]
 
 run0 = ->
-	b = myCodeMirror.getValue()
+	b = student.myCodeMirror.getValue()
 
-	orig_setup = setup
-	orig_draw = draw
+	orig = {}
+	orig.setup = setup
+	orig.draw = draw
 	setup = ->
 	draw = ->
 
 	run1 transpile b  
 
-	student_draw = draw
-	student_setup = setup
-	draw = orig_draw 
-	setup = orig_setup
+	student.draw = draw
+	student.setup = setup
+	draw = orig.draw 
+	setup = orig.setup
 
 run1 = (code) ->
 	resetMatrix()
@@ -119,16 +122,16 @@ run1 = (code) ->
 		setMsg err.stack
 
 run = ->
-	running = 1 - running 
-	if running == 1
+	student.running = 1 - student.running 
+	if student.running == 1
 		run0()
-		window.student_setup()
+		student.setup() 
 	else 
 		background 255
 
 window.onload = ->
 
-	myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
+	student.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,
 		mode: "coffeescript",
 		keyMap: "sublime",
@@ -140,12 +143,12 @@ window.onload = ->
 
 	$(".CodeMirror").css('font-size',"16pt")
 
-	myCodeMirror.setValue initial_code
-	myCodeMirror.refresh()
+	student.myCodeMirror.setValue initial_code
+	student.myCodeMirror.refresh()
 
 	background 128
 
-	myCodeMirror.focus()
+	student.myCodeMirror.focus()
 	window.resizeTo 1000,750
 	changeLayout()
 
@@ -164,20 +167,19 @@ f_resize = () ->
 #$(window).resize(f_resize)
 
 setMsg = (txt) ->
-	msg.val(txt)
+	student.msg.val(txt)
 	if txt == '' 
-		msg.css('background-color', '#FFFFFF')
+		student.msg.css('background-color', '#FFFFFF')
 	else
-		msg.css('background-color', '#FF0000')
+		student.msg.css('background-color', '#FF0000')
 
 initial_code = """
-@balls = []
+balls = []
 
 class Ball
-	constructor : (@x,@y,@size, @vx,@vy, @r=random(1),@g=random(1),@b=random(1)) -> print @
-
+	constructor : (@x,@y, @vx,@vy, @size=50) -> 
 	draw : ->
-		fc @r,@g,@b
+		fc()
 		circle @x,@y,@size
 		@x += @vx
 		@y += @vy
@@ -186,10 +188,13 @@ class Ball
 
 @draw = ->
 	bg 0.5
-	for ball in @balls
+	for ball in balls
 		ball.draw()
+	fc 0
+	textSize 40
+	text balls.length, 10,40
 		
 @mousePressed = ->
 	if mouseX < width and mouseY < height
-		@balls.push new Ball mouseX,mouseY,random(10,50), vx=random(1,2),vy=0
+		balls.push new Ball x=mouseX,y=mouseY, vx=random(-1,1),vy=0
 """
