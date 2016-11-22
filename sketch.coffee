@@ -18,8 +18,8 @@ setup = ->
 	student.button.mousePressed run
 
 # Todo add all events
-mousePressed = -> xstudent.mousePressed() if xstudent.mousePressed?
-keyPressed = -> xstudent.keyPressed() if xstudent.keyPressed?
+mousePressed = -> xstudent.mousePressed() 
+keyPressed = -> xstudent.keyPressed() 
 
 draw = ->
 	if student.running == 1
