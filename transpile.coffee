@@ -23,7 +23,18 @@ transpile = (code) ->
 	temp.push('\tsetup : ->')
 	temp.push('\tdraw : ->')
 	temp.push('\tkeyPressed : ->')
+	temp.push('\tkeyReleased : ->')
+	temp.push('\tkeyTyped : ->')
+	temp.push('\tmouseMoved : ->')
+	temp.push('\tmouseDragged : ->')
 	temp.push('\tmousePressed : ->')
+	temp.push('\tmouseReleased : ->')
+	temp.push('\tmouseClicked : ->')
+	temp.push('\tmouseWheel : ->')
+	temp.push('\ttouchStarted : ->')
+	temp.push('\ttouchMoved : ->')
+	temp.push('\ttouchEnded : ->')
+
 	for line in lines
 		line = "\t" + spacesToTabs line
 		if clean(line).length > 0 
@@ -31,3 +42,4 @@ transpile = (code) ->
 	temp.push "@xstudent = new Student()"
 	code = temp.join '\n'
 	CoffeeScript.compile code, { bare : true }
+
