@@ -5,9 +5,6 @@ student.button = 0
 student.myCodeMirror = 0
 student.msg = 0
 
-student.setup = ->
-student.draw = ->
-
 setup = ->
 	c = createCanvas 600, 600
 	pixelDensity 1
@@ -20,9 +17,13 @@ setup = ->
 	student.button.size 40,20
 	student.button.mousePressed run
 
+# Todo add all events
+mousePressed = -> xstudent.mousePressed() if xstudent.mousePressed?
+keyPressed = -> xstudent.keyPressed() if xstudent.keyPressed?
+
 draw = ->
 	if student.running == 1
-		student.draw()
+		xstudent.draw()
 	else
 		bg 1
 
@@ -94,18 +95,7 @@ range = () ->
 run0 = ->
 	b = student.myCodeMirror.getValue()
 
-	orig = {}
-	orig.setup = setup
-	orig.draw = draw
-	setup = ->
-	draw = ->
-
 	run1 transpile b  
-
-	student.draw = draw
-	student.setup = setup
-	draw = orig.draw 
-	setup = orig.setup
 
 run1 = (code) ->
 	resetMatrix()
@@ -125,7 +115,7 @@ run = ->
 	student.running = 1 - student.running 
 	if student.running == 1
 		run0()
-		student.setup() 
+		xstudent.setup() 
 	else 
 		background 255
 
@@ -174,8 +164,6 @@ setMsg = (txt) ->
 		student.msg.css('background-color', '#FF0000')
 
 initial_code = """
-balls = []
-
 class Ball
 	constructor : (@x,@y, @vx,@vy, @size=50) -> 
 	draw : ->
@@ -186,15 +174,17 @@ class Ball
 		@vx = -@vx unless @size < @x < width-@size
 		@vy = if @y < height-@size then @vy+0.1 else -@vy
 
-@draw = ->
+showCount = -> text balls.length, 10,40
+balls = []
+
+setup : -> balls.push new Ball x=300,y=300, vx=random(-1,1),vy=0
+draw : ->
 	bg 0.5
-	for ball in balls
-		ball.draw()
+	ball.draw() for ball in balls
 	fc 0
 	textSize 40
-	text balls.length, 10,40
-		
-@mousePressed = ->
+	showCount()
+mousePressed : ->
 	if mouseX < width and mouseY < height
 		balls.push new Ball x=mouseX,y=mouseY, vx=random(-1,1),vy=0
 """
