@@ -35,7 +35,7 @@ transpile = (code) ->
 	temp.push('\ttouchStarted : ->')
 	temp.push('\ttouchMoved : ->')
 	temp.push('\ttouchEnded : ->')
-	temp.push('\tassert : (a,b) ->')
+	temp.push('\tassert = (a,b) ->')
 	temp.push('\t\tif a != b')
 	temp.push('\t\t\tprint "#{a} != #{b}"')
 
