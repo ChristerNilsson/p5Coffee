@@ -18,18 +18,18 @@ setup = ->
 	student.button.mousePressed run
 
 # Add all possible events.
-keyPressed = -> xstudent.keyPressed() if student.running==1
-keyReleased = -> xstudent.keyReleased() if student.running==1
-keyTyped = -> xstudent.keyTyped() if student.running==1
-mouseMoved = -> xstudent.mouseMoved() if student.running==1
-mouseDragged = -> xstudent.mouseDragged() if student.running==1
-mousePressed = -> xstudent.mousePressed() if student.running==1
-mouseReleased = -> xstudent.mouseReleased() if student.running==1
-mouseClicked = -> xstudent.mouseClicked() if student.running==1
-mouseWheel = (event) -> xstudent.mouseWheel(event) if student.running==1
-touchStarted = -> xstudent.touchStarted() if student.running==1
-touchMoved = -> xstudent.touchMoved() if student.running==1
-touchEnded = -> xstudent.touchEnded() if student.running==1
+keyPressed = -> xstudent.keyPressed() if xstudent? and student.running==1
+keyReleased = -> xstudent.keyReleased() if xstudent? and student.running==1
+keyTyped = -> xstudent.keyTyped() if xstudent? and student.running==1
+mouseMoved = -> xstudent.mouseMoved() if xstudent? and student.running==1
+mouseDragged = -> xstudent.mouseDragged() if xstudent? and student.running==1
+mousePressed = -> xstudent.mousePressed() if xstudent? and student.running==1
+mouseReleased = -> xstudent.mouseReleased() if xstudent? and student.running==1
+mouseClicked = -> xstudent.mouseClicked() if xstudent? and student.running==1
+mouseWheel = (event) -> xstudent.mouseWheel(event) if xstudent? and student.running==1
+touchStarted = -> xstudent.touchStarted() if xstudent? and student.running==1
+touchMoved = -> xstudent.touchMoved() if xstudent? and student.running==1
+touchEnded = -> xstudent.touchEnded() if xstudent? and student.running==1
 
 draw = ->
 	if student.running == 1
