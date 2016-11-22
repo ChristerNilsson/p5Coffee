@@ -20,8 +20,10 @@ transpile = (code) ->
   lines = code.split '\n'
   return code if lines[0].indexOf('//ECMA') == 0 
   temp = ['class Student']
-  temp.push('  keyPressed : ->')
-  temp.push('  mousePressed : ->')
+  temp.push('\tsetup : ->')
+  temp.push('\tdraw : ->')
+  temp.push('\tkeyPressed : ->')
+  temp.push('\tmousePressed : ->')
   for line in lines
     line = "\t" + spacesToTabs line
     if clean(line).length > 0 

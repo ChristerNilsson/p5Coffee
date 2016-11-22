@@ -23,7 +23,7 @@ keyPressed = -> xstudent.keyPressed()
 
 draw = ->
 	if student.running == 1
-		xstudent.draw()
+		xstudent.draw() 
 	else
 		bg 1
 
