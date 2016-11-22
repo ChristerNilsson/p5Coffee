@@ -35,7 +35,8 @@ transpile = (code) ->
 	temp.push('\ttouchStarted : ->')
 	temp.push('\ttouchMoved : ->')
 	temp.push('\ttouchEnded : ->')
-	temp.push('\tassert : (a,b) -> print "#{a} != #{b}" if a != b')
+	temp.push('\tassert : (a,b) ->')
+	temp.push('\t\tprint "#{a} != #{b}" if a != b')
 
 	for line in lines
 		line = "\t" + spacesToTabs line
