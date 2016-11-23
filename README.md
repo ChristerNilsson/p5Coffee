@@ -2,18 +2,6 @@
 
 p5 and Coffeescript editor.
 
-Use colon instead of equal sign for all events
-* setup : ->
-* draw : ->
-* mousePressed : ->
-* and so on...
+NOTE: This is a bad idea as debugging of client code is impossible, due to eval().
 
-Tabs are two spaces.
-
-F12 will give you debug information
-
-Assert fungerar:
-
-f = (x) -> x*x
-setup : ->		
-	@assert f(6),26
+Should only be used by experts, not beginners.
